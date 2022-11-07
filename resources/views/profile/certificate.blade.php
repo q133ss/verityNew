@@ -66,6 +66,13 @@
                                     <span class="recom-btn" onclick="changeSum(1000)">1000</span>
                                     <span class="recom-btn" onclick="changeSum(3000)">3000</span>
                                     <span class="recom-btn" onclick="changeSum(5000)">5000</span>
+                                    <span class="recom-btn" onclick="changeSum(10000)">10000</span>
+                                    <span class="recom-btn" onclick="changeSum(25000)">25000</span>
+                                    <span class="recom-btn" onclick="changeSum(50000)">50000</span>
+                                    <span class="recom-btn" onclick="changeSum(100000)">100000</span>
+                                    <span class="recom-btn" onclick="changeSum(300000)">300000</span>
+                                    <span class="recom-btn" onclick="changeSum(500000)">500000</span>
+                                    <span class="recom-btn" onclick="changeSum(1000000)">1000000</span>
                                 </div>
 
                             </div>
@@ -131,6 +138,12 @@
     </script>
 
     <style>
+        .recom-price{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
         .recom-btn{
             background-color:#d5ba64;
             cursor: pointer;

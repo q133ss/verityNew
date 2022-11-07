@@ -12,7 +12,7 @@ class VolunteerController extends Controller
 {
     public function index()
     {
-        $volunteers = User::where('is_admin', false)->where('is_block',false)->orderBy('lastname')->get()
+        $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->where('is_block',false)->orderBy('lastname')->get()
             ->groupBy(function($item) {
             return mb_substr($item->lastname, 0, 1);
         });
@@ -27,7 +27,7 @@ class VolunteerController extends Controller
 
     public function search($request)
     {
-        $volunteers = User::where('is_admin', false)->withSearchFio($request)->orderBy('lastname')->get()
+        $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->withSearchFio($request)->orderBy('lastname')->get()
             ->groupBy(function($item) {
                 return mb_substr($item->lastname, 0, 1);
             });
@@ -36,7 +36,7 @@ class VolunteerController extends Controller
 
     public function searchCity($city)
     {
-        $volunteers = User::where('is_admin', false)->withSearchCity($city)->orderBy('lastname')->get()
+        $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->withSearchCity($city)->orderBy('lastname')->get()
             ->groupBy(function($item) {
                 return mb_substr($item->lastname, 0, 1);
             });

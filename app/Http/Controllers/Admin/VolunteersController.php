@@ -20,7 +20,7 @@ class VolunteersController extends Controller
      */
     public function index()
     {
-        $volunteers = User::where('is_admin', false)->where('is_block', false)->orderBy('created_at', 'DESC')->get();
+        $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->where('is_block', false)->orderBy('created_at', 'DESC')->get();
         return view('admin.volunteers.index', compact('volunteers'));
     }
 
@@ -56,6 +56,7 @@ class VolunteersController extends Controller
         unset($data['telegram']);
         $data['socials'] = $socials;
         $data['password'] = Hash::make($request->password);
+        $data['is_volunteer'] = true;
         User::create($data);
         return to_route('admin.volunteers.index')->withSuccess('Волонтер успешно добавлен');
     }
@@ -106,6 +107,9 @@ class VolunteersController extends Controller
         if($request->hasFile('photo')) {
             $path = $request->file('photo')->store('volunteers', 'public');
             $data['photo'] = '/storage/' . $path;
+        }
+        if($request->password != null){
+            $data['password'] = Hash::make($request->password);
         }
         $socials = json_encode([
                     'whatsapp' => $request->whatsapp,

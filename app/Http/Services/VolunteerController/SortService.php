@@ -11,19 +11,19 @@ class SortService{
     static function sort($field) {
         switch ($field){
             case 'lastname':
-                $volunteers = User::where('is_admin', false)->orderBy('lastname')->get()
+                $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->orderBy('lastname')->get()
                     ->groupBy(function($item) {
                         return mb_substr($item->lastname, 0, 1);
                     });
                 break;
             case 'patronymic':
-                $volunteers = User::where('is_admin', false)->orderBy('patronymic')->get()
+                $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->orderBy('patronymic')->get()
                     ->groupBy(function($item) {
                         return mb_substr($item->patronymic, 0, 1);
                     });
                 break;
             default:
-                $volunteers = User::where('is_admin', false)->orderBy('name')->get()
+                $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->orderBy('name')->get()
                     ->groupBy(function($item) {
                         return mb_substr($item->name, 0, 1);
                     });
@@ -35,13 +35,13 @@ class SortService{
     static function adminSort($field) {
         switch ($field){
             case 'lastname':
-                $volunteers = User::where('is_admin', false)->orderBy('lastname')->get();
+                $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->orderBy('lastname')->get();
                 break;
             case 'patronymic':
-                $volunteers = User::where('is_admin', false)->orderBy('patronymic')->get();
+                $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->orderBy('patronymic')->get();
                 break;
             default:
-                $volunteers = User::where('is_admin', false)->orderBy('name')->get();
+                $volunteers = User::where('is_admin', false)->where('is_volunteer', true)->orderBy('name')->get();
                 break;
         }
         return $volunteers;

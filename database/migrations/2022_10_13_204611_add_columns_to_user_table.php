@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('is_admin')->default(false);
+            $table->boolean('is_volunteer')->default(false);
             $table->string('photo')->nullable();
             $table->string('lastname');
             $table->string('patronymic');
             $table->string('city');
-            $table->json('socials');
+            $table->json('socials')->nullable();
             $table->boolean('is_block')->default(false);
             $table->text('note')->nullable();
         });

@@ -32,7 +32,8 @@ class UpdateRequest extends FormRequest
             'whatsapp' => 'url',
             'telegram' => 'url',
             'email' => 'email',
-            'note' => 'nullable|string'
+            'note' => 'nullable|string',
+            'password' => 'nullable|string'
         ];
     }
 

@@ -30,4 +30,10 @@ class ProfileController extends Controller
         $user = Auth()->user();
         return view('profile.statistic', compact('user'));
     }
+
+    public function contributorCertificate()
+    {
+        $certificates = Auth()->user()->contributor->getCertificates;
+        return view('profile.myCertificates', compact('certificates'));
+    }
 }

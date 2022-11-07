@@ -26,7 +26,9 @@ class User extends Authenticatable
         'city',
         'socials',
         'photo',
-        'note'
+        'note',
+        'is_volunteer',
+        'contributor_id'
     ];
 
     /**
@@ -100,5 +102,23 @@ class User extends Authenticatable
     public function getStat($field)
     {
         return $this->hasOne(UserStat::class, 'user_id', 'id')->pluck($field)->first();
+    }
+
+    static public function generatePassword($length = 8)
+    {
+        $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $password = '';
+
+        for($i = 0; $i < $length; $i++) {
+            $random_character = $chars[mt_rand(0, strlen($chars) - 1)];
+            $password .= $random_character;
+        }
+
+        return $password;
+    }
+
+    public function contributor()
+    {
+        return $this->hasOne(Contributor::class, 'id', 'contributor_id');
     }
 }

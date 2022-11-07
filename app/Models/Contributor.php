@@ -40,6 +40,11 @@ class Contributor extends Model
         return $this->hasOne(Certificate::class, 'contributor_id', 'id');
     }
 
+    public function getCertificates()
+    {
+     return $this->hasMany(Certificate::class, 'contributor_id', 'id');
+    }
+
     public function getFio()
     {
         return $this->lastname.' '.$this->name.' '.$this->patronymic;

@@ -29,9 +29,9 @@ class StoreRequest extends FormRequest
             'lastname' => 'required|string',
             'patronymic' => 'required|string',
             'city' => 'required|string',
-            'whatsapp' => 'required|string',
-            'telegram' => 'required|string',
-            'email' => 'required|string',
+            'whatsapp' => 'required|url|string',
+            'telegram' => 'required|url|string',
+            'email' => 'required|email|string',
             'password' => 'required|string',
             'note' => 'nullable|string'
         ];

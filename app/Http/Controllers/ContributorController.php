@@ -7,6 +7,7 @@ use App\Models\Certificate;
 use App\Models\Contributor;
 use App\Models\Country;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 
 class ContributorController extends Controller
@@ -37,17 +38,18 @@ class ContributorController extends Controller
 
     public function payment(PaymentRequest $request)
     {
-        session()->push('req', $request->validated());
+        $data = $request->validated();
+        session()->push('req', $data);
         session()->save();
 
         //payment
-        $lastId = Certificate::latest()->first()->id + 1;
+        $lastId = 'Сертификат: ' . Certificate::latest()->first()->id + 1 . '|' . uniqid();
         $sber = array();
         $sber['userName'] = env('SBER_USERNAME');
         $sber['password'] = env('SBER_PWD');
         $sber['orderNumber'] = $lastId;// Order number
         $sber['amount'] = $request->sum*100;// Amount
-        $sber['returnUrl'] = env('APP_URL').'/certificate/payment/success';// Success redirect
+        $sber['returnUrl'] = env('APP_URL').'/payment/success'; // Success redirect
         $sber['failUrl'] = env('APP_URL')."/contributors/payment/fail";// Failure redirect
         //$ch = curl_init('https://3dsec.sberbank.ru/payment/rest/register.do?' . http_build_query($sber));
         $ch = curl_init('https://securepayments.sberbank.ru/payment/rest/register.do?' . http_build_query($sber));
@@ -68,10 +70,30 @@ class ContributorController extends Controller
 
     public function paymentSuccess()
     {
-        $req = session()->get('req')[0];
+        $session_data = session()->get('req');
+        $req = end($session_data);
+        $email = $req['email'];
+        unset($req['email']);
+        
         $contributor = Contributor::create($req);
         $certificate = Certificate::make($contributor->id);
-        User::findOrFail($req['recommender_id'])->addStat('donated');
+        //Создаем юзера
+        $password = User::generatePassword();
+        $req['password'] = hash::make($password);
+        $req['contributor_id'] = $contributor->id;
+        $req['email'] = $email;
+        $user = User::create($req);
+        //Отправляем письмо
+        $to      = $user->email;
+        $subject = 'Доступы к личному кабинету - Verity';
+        $message = "Email: {$user->email}";
+        $message .= "\nПароль: {$password}";
+        $mail = mail($to, $subject, $message);
+
+        //Статистика
+        if($req['recommender_id'] != null) {
+            User::findOrFail($req['recommender_id'])->addStat('donated');
+        }
         return to_route('certificate.show', $certificate->id);
     }
 

@@ -31,7 +31,8 @@ class PaymentRequest extends FormRequest
             'country_id' => 'required|string',
             'recommender_id' => 'integer|nullable',
             'city' => 'required|string',
-            'sum' => 'numeric'
+            'sum' => 'numeric',
+            'email' => 'email|unique:users,email'
         ];
     }
 
@@ -44,7 +45,9 @@ class PaymentRequest extends FormRequest
             'phone.required' => 'Введите телефон',
             'country_id.required' => 'Выберите страну',
             'city.required' => 'Введите город',
-            'sum.required' => 'Введите сумму'
+            'sum.required' => 'Введите сумму',
+            'email.email' => 'Email неверный',
+            'email.unique' => 'Такой Email уже есть в базе'
         ];
     }
 }

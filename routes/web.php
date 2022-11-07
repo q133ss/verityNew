@@ -21,6 +21,10 @@ Route::get('/ttt', function(){
     \Artisan::call('db:seed');
 });
 
+Route::get('stt', function(){
+    \Artisan::call('storage:link');
+});
+
 Route::get('/donate', [App\Http\Controllers\ContributorController::class, 'donate'])->name('donate');
 Route::prefix('volunteers')->group(function(){
     Route::get('/', [App\Http\Controllers\VolunteerController::class, 'index'])->name('volunteers');
@@ -42,6 +46,7 @@ Route::get('/certificate/{id}', [App\Http\Controllers\CertificateController::cla
 Route::view('/verification', 'verification')->name('verification');
 Route::post('/certificate/check', [App\Http\Controllers\VerificationController::class, 'check']);
 Route::view('/for-volunteers', 'for_volunteers')->name('for.volunteers');
+Route::get('/payment/success', [App\Http\Controllers\ContributorController::class, 'paymentSuccess']);
 
 Route::prefix('admin')->name('admin.')->middleware('auth')->middleware('is.admin')->group(function(){
     Route::get('/', [App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
@@ -72,6 +77,7 @@ Route::prefix('profile')->name('profile.')->middleware('auth')->group(function()
     Route::get('/', [App\Http\Controllers\ProfileController::class, 'index'])->name('index');
     Route::get('/contributors', [App\Http\Controllers\ProfileController::class, 'contributors'])->name('contributors');
     Route::get('/certificate', [App\Http\Controllers\ProfileController::class, 'certificate'])->name('certificate');
+    Route::get('/contributor/certificate', [App\Http\Controllers\ProfileController::class, 'contributorCertificate'])->name('contributor.certificate');
     Route::get('/statistic', [App\Http\Controllers\ProfileController::class, 'statistic'])->name('statistic');
     Route::post('/update', [App\Http\Controllers\UserController::class, 'update'])->name('update');
 });

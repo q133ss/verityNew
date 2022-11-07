@@ -13,9 +13,11 @@
             <div class="col-md-12"><input type="text" class="form-control" name="patronymic" placeholder="Отчество" value="{{$volunteer->patronymic}}"></div>
             <div class="col-md-12"><input type="text" class="form-control" name="city" placeholder="Город" value="{{$volunteer->city}}"></div>
 
-            <div class="col-md-12"><input type="text" class="form-control" name="whatsapp" placeholder="whatsapp" value="{{$volunteer->getSocial('whatsapp')}}"></div>
-            <div class="col-md-12"><input type="text" class="form-control" name="telegram" placeholder="telegram" value="{{$volunteer->getSocial('telegram')}}"></div>
-            <div class="col-md-12"><input type="text" class="form-control" name="email" placeholder="email" value="{{$volunteer->getSocial('email')}}"></div>
+            <div class="col-md-12"><input type="text" class="form-control" name="whatsapp" placeholder="whatsapp | https://wa.me/7XXXXXXXXXX" value="{{$volunteer->getSocial('whatsapp')}}"></div>
+            <div class="col-md-12"><input type="text" class="form-control" name="telegram" placeholder="telegram | https://t.me/XXXXXXXXX" value="{{$volunteer->getSocial('telegram')}}"></div>
+            <div class="col-md-12"><input type="text" class="form-control" name="email" placeholder="email | mail@mail.ru" value="{{$volunteer->getSocial('email')}}"></div>
+
+            <div class="col-md-12"><input type="text" placeholder="Новый пароль (можно оставить пустым)" name="password" class="form-control"></div>
 
             <div class="col-md-12"><textarea name="note" class="form-control" placeholder="Заметка" id="" cols="10" rows="3">{{$volunteer->note}}</textarea></div>
             <div class="text-center">
